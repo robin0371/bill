@@ -23,12 +23,15 @@ class CreateTransfer(FormView):
 
         users_cards = UserCard.objects.filter(inn=inn)
 
+        # Разделяем сумму, на количество найденных счетов для перевода
         transfer_summa = transfer_sum / users_cards.count()
 
+        # Переводим средства на счета
         for bill in BillRub.objects.filter(user_card__in=users_cards):
             bill.total += transfer_summa
             bill.save()
 
+        # Обновляем счет отправителя
         user.billrub.total = user.billrub.total - transfer_sum
         user.billrub.save()
 

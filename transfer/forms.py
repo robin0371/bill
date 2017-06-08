@@ -5,6 +5,7 @@ from transfer.models import UserCard
 
 class TransferForm(forms.Form):
     """Форма перевода денежных средств."""
+
     user = forms.ModelChoiceField(
         label='Отправитель', queryset=UserCard.objects.all())
     inn = forms.CharField(
